@@ -1,3 +1,14 @@
+[user]
+	email = jeff@westcoastcode.com
+	name = jbend
+	signingkey = jeff@westcoastcode.com
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
 [alias]
 	lg = log --pretty='%C(red)%h%Creset%C(yellow)%d%Creset %s %C(cyan)(%ar)%Creset'
 	new = lg main..HEAD
@@ -5,3 +16,8 @@
 	glt = log --oneline --decorate --graph --all
 	glta = log --graph --pretty='\\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'/'' --all
 
+
+[gpg]
+	program = /usr/local/bin/gpg
+[core]
+	sshCommand = /mnt/c/Windows/System32/OpenSSH/ssh.exe
