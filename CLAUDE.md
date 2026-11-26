@@ -26,13 +26,20 @@ Always run `chezmoi diff` before `chezmoi apply`; apply overwrites files in `$HO
 
 ## Contents
 
-- `dot_gitconfig.tmpl` → `~/.gitconfig`: identity, `gh auth git-credential` (resolved from PATH, since gh is installed via mise and versioned paths go stale), log aliases (`lg`, `new`, `missing`, `glt`, `glta`), `zdiff3` merge style. The delta pager section renders only when `delta` is on PATH (`lookPath`), so after installing `git-delta` run `chezmoi apply` again.
+- `dot_gitconfig.tmpl` → `~/.gitconfig`: personal identity, `gh auth git-credential` (from PATH; gh is installed via mise so versioned paths go stale), aliases, `zdiff3`, `init.defaultBranch = main`. Conditional blocks: delta (if `delta` on PATH) and SSH commit/tag signing via 1Password (if `op-ssh-sign` exists; path differs on macOS). A trailing `includeIf "gitdir:~/Code/wcc/"` switches to the WCC email — keep it last so it overrides `[user]`.
+- `dot_config/git/wcc.gitconfig`: WCC identity included for `~/Code/wcc/`.
+- `dot_config/git/allowed_signers`: the public signing key for both emails, for local signature verification. Update it if the signing key changes.
+- `dot_claude/CLAUDE.md` → `~/.claude/CLAUDE.md`: global Claude Code instructions (1Password, identity, secrets rules).
 - `dot_zshrc`: zinit + Powerlevel10k setup; currently ignored (see above).
 
 ## Git config layering on this machine
 
 Omarchy ships `~/.config/git/config` (not managed here) with its own defaults (pull.rebase, rerere, diff.algorithm, etc.). Git reads it **before** `~/.gitconfig`, so values in this repo override it. Multi-valued keys like `credential.helper` accumulate; the empty `helper =` line resets the list so only the chezmoi-managed helper runs.
 
+## Public repo
+
+This repo is public. Public keys and emails are fine; secrets, hostnames, IPs, and usernames for servers are not. Template those from 1Password with `onepasswordRead "op://..."`. The access SOP (1Password accounts/vaults, SSH hosts) lives in `~/Vault/Areas/Accounts and Access.md`.
+
 ## Planned
 
-Commit signing and SSH are intentionally not configured yet; they will move to 1Password (SSH agent + SSH-based commit signing). Don't re-add the old GPG / Windows `ssh.exe` settings from git history.
+`~/.ssh/config` (GitHub over SSH, WCC VPSes, Mac Mini) as a template reading host details from 1Password, and a 1Password `agent.toml` limiting which vaults serve SSH keys. Don't re-add the old GPG / Windows `ssh.exe` settings from git history.

@@ -1,0 +1,3 @@
+# Managed by chezmoi. Included by ~/.gitconfig for repos under ~/Code/wcc/.
+[user]
+	email = jeff@westcoastcode.com
