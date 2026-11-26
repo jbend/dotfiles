@@ -30,6 +30,9 @@ Always run `chezmoi diff` before `chezmoi apply`; apply overwrites files in `$HO
 - `dot_config/git/wcc.gitconfig`: WCC identity included for `~/Code/wcc/`.
 - `dot_config/git/allowed_signers`: the public signing key for both emails, for local signature verification. Update it if the signing key changes.
 - `dot_claude/CLAUDE.md` → `~/.claude/CLAUDE.md`: global Claude Code instructions (1Password, identity, secrets rules).
+- `private_dot_ssh/config.tmpl` → `~/.ssh/config`: one `Host` block per destination pinned to a public key (`IdentityFile ~/.ssh/<name>.pub` + `IdentitiesOnly yes`); `Host *` points at the 1Password agent socket (macOS path differs). Server hosts must template hostname/user from 1Password, e.g. `{{ onepasswordRead "op://WCC Infrastructure/<item>/<field>" "westcoastcode.1password.ca" }}`.
+- `private_dot_ssh/*.pub`: public keys only; private keys never leave 1Password.
+- `dot_config/1Password/ssh/agent.toml`: limits the SSH agent to vaults "Private" (account "Our Family") and "WCC Infrastructure" (account "West Coast Code"). New SSH keys must go in one of those vaults.
 - `dot_zshrc`: zinit + Powerlevel10k setup; currently ignored (see above).
 
 ## Git config layering on this machine
@@ -42,4 +45,4 @@ This repo is public. Public keys and emails are fine; secrets, hostnames, IPs, a
 
 ## Planned
 
-`~/.ssh/config` (GitHub over SSH, WCC VPSes, Mac Mini) as a template reading host details from 1Password, and a 1Password `agent.toml` limiting which vaults serve SSH keys. Don't re-add the old GPG / Windows `ssh.exe` settings from git history.
+SSH host entries for the WCC VPSes (keys rotated out of Proton Pass) and the Mac Mini. Don't re-add the old GPG / Windows `ssh.exe` settings from git history.

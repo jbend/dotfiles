@@ -1,0 +1,13 @@
+# Managed by chezmoi. Which 1Password vaults the SSH agent may serve keys from.
+# Same path on Linux and macOS. Order = order keys are offered.
+# See ~/Vault/Areas/Accounts and Access.md for the account/vault SOP.
+
+# Personal identity: GitHub auth + commit signing
+[[ssh-keys]]
+vault = "Private"
+account = "Our Family"
+
+# WCC-owned machines: VPSes, Mac Mini
+[[ssh-keys]]
+vault = "WCC Infrastructure"
+account = "West Coast Code"

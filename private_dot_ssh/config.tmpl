@@ -1,0 +1,17 @@
+# Managed by chezmoi — edit with: chezmoi edit ~/.ssh/config
+# Private keys live only in 1Password; ~/.ssh holds public keys so each host
+# is pinned to one key (IdentitiesOnly avoids "Too many authentication failures").
+# This repo is public: server hostnames/IPs/users must come from 1Password
+# via onepasswordRead, never be written here literally.
+
+Host github.com
+	User git
+	IdentityFile ~/.ssh/github.pub
+	IdentitiesOnly yes
+
+Host *
+{{- if eq .chezmoi.os "darwin" }}
+	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{- else }}
+	IdentityAgent ~/.1password/agent.sock
+{{- end }}
