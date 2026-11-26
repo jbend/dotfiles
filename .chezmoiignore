@@ -1,0 +1,4 @@
+README.md
+CLAUDE.md
+# zsh not in use for now; remove this line to deploy ~/.zshrc
+.zshrc
